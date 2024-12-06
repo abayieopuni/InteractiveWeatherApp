@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body is at least the full viewport height */
+    background-color: #5D69F6;
+    background: 
+        url('../assets/svgs/Group 915.svg') top left no-repeat, 
+        url('../assets/svgs/background2.svg') bottom right no-repeat;
+    background-size: cover;
+    margin: 0; /* Removes any default margin that may push the footer */
+}
