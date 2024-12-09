@@ -9,6 +9,7 @@ const imageDaily = document.querySelector(".imageD");
 const searchList = document.querySelector(".searchList");
 const forecastSection = document.querySelector(".forecast");
 const currentDaySection = document.getElementById("current-day");
+const forecastCard = document.querySelector(".forecastCard");
 
 
 // Local Storage for Search History
@@ -26,7 +27,7 @@ function updateCurrentWeather(data) {
 
   // Update the weather container
   weatherContainer.innerHTML = `
-    <h2 class="text-2xl font-bold bg-white shadow-lg rounded-lg p-6 text-center mx-4 ">${cityName} - ${date}</h2>
+    <h2 class="text-2xl font-bold bg-[#da78e7] text-white-600 shadow-lg rounded-lg p-6 text-center mx-4 ">${cityName} - ${date}</h2>
   `;
   temperature.innerHTML = `Temperature: ${temp} °C`;
   humidity.innerHTML = `Humidity: ${hum} %`;
@@ -47,6 +48,7 @@ function fetchUvData(lat, lon) {
     .then((data) => {
       const uvIndex = data.current.uvi;
       let uvClass = "btn btn-success"; // Default to low risk
+      console.log(uvClass)
 
       // Change UV Index class based on risk level
       if (uvIndex > 5) {
@@ -55,10 +57,7 @@ function fetchUvData(lat, lon) {
         uvClass = "btn btn-warning";
       }
 
-      // Update UV index display
-      uvi.innerHTML = `
-        UV Index: <span class="${uvClass}">${uvIndex}</span>
-      `;
+  
     });
 }
 
@@ -76,9 +75,9 @@ function displayCurrentDay(data) {
     // Update the HTML for the current day
     currentDaySection.innerHTML = `
       
-      <div class="bg-white shadow-lg rounded-lg p-6 text-center w-64">
+      <div class="text-white-600 shadow-lg rounded-lg p-6 text-center w-64">
       <h2 class="font-bold text-xl mb-2">Today's Weather</h2>
-      <p class="font-bold">${todayDate}</p>
+      <p class="font-bold text-white-600">${todayDate}</p>
       <img src="${iconUrl}" alt="Current Weather Icon" class="w-16 h-16 mx-auto my-4">
       <h3 class="text-4xl font-bold text-gray-800" >Temp: ${temp} °C</h3>
       <p>Humidity: ${hum} %</p>
@@ -92,7 +91,7 @@ function updateForecast(data) {
   forecastSection.innerHTML = ""; // Clear previous forecast
 
   // Loop through forecast data
-  for (let i = 0; i < data.list.length; i += 8) {
+  for (let i = 8; i < data.list.length; i += 9) {
     const dayData = data.list[i];
     const date = moment(dayData.dt * 1000).format("DD MMM YYYY");
     const { temp, humidity: hum } = dayData.main;
@@ -102,7 +101,7 @@ function updateForecast(data) {
 
     // Create a card for each forecast day
     const forecastCard = document.createElement("div");
-    forecastCard.classList = "  flex gap  p-4 bg-white shadow rounded-lg text-center";
+    forecastCard.classList = " flex flex-col  bg-white shadow-lg rounded-lg  text-center w- ";
 
     forecastCard.innerHTML = `
       <p class="font-bold">${date}</p>
